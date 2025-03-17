@@ -22,7 +22,7 @@ export function Button({ children, onClick, className }) {
 const initialRecipes = [
   { id: 1, title: "Creamy Ravioli", category: "Pasta", description: "Delicious ravioli with creamy sauce.", image: "https://i.pinimg.com/736x/06/0f/e5/060fe527e9aad9f7148b2378685d0e2a.jpg" },
   { id: 2, title: "Marry Me Chicken", category: "Meat", description: "Juicy chicken with flavorful sauce.", image: "http://i.pinimg.com/736x/cb/3f/51/cb3f512304bd0308d8f286c1a6be18d9.jpg" },
-  { id: 3, title: "Lasagna", category: "Pasta", description: "Classic Italian lasagna.", image: "https://i.pinimg.com/736x/8f/0d/d4/8f0dd4d9f5381460cc6ae99c97960b23.jpg" },
+  { id: 3, title: "Lasagna", category: "Pasta", description: "Classic Italian lasagna.", image: "https://i.pinimg.com/736x/8f/0d/d4/8f0dd4d9f5381460cc6ae99c97960b23.jpg"},
   { id: 4, title: "Greek Salad", category: "Salads", description: "Healthy and delicious Greek salad.", image: "https://i.pinimg.com/736x/d1/e2/a9/d1e2a9c45ae8746c20b326c49414f663.jpg"},
   { id: 5, title: "Tiramisu", category: "Deserts", description: "Classic Italian dessert.", image: "https://i.pinimg.com/736x/48/5f/5e/485f5e8e40ce4996a24d2f5ea41ba367.jpg"},
   { id: 6, title: "Chicken Alfredo", category: "Pasta", description: "Creamy chicken alfredo pasta.", image: "https://i.pinimg.com/736x/5b/"},
