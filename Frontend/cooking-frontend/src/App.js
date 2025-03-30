@@ -9,11 +9,6 @@ import  UpdateRecipe from "./components/UpdateRecipe";
 import Charts from "./components/Chart";
 
 
-
-
-
-
-
 const initialRecipes = [
   { id: 1, title: "Creamy Ravioli", category: "Pasta", description: "Delicious ravioli with creamy sauce.",totaltime: 50, image: "https://i.pinimg.com/736x/06/0f/e5/060fe527e9aad9f7148b2378685d0e2a.jpg" },
   { id: 2, title: "Marry Me Chicken", category: "Meat", description: "Juicy chicken with flavorful sauce.",totaltime: 95, image: "http://i.pinimg.com/736x/cb/3f/51/cb3f512304bd0308d8f286c1a6be18d9.jpg" },

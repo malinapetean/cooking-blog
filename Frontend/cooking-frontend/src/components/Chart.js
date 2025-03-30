@@ -46,7 +46,7 @@ const Charts = ({ recipes }) => {
                   <XAxis dataKey="category" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="avgTime" fill="#8884d8" />
+                  <Bar dataKey="avgTime" fill="#D08A92" />
               </BarChart>
           </div>
           <div>
@@ -54,7 +54,7 @@ const Charts = ({ recipes }) => {
               <PieChart width={400} height={300}>
                   <Pie data={categoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100}>
                   {categoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={['#0088FE', '#00C49F', '#FFBB28', '#FF8042'][index % 4]} />
+                      <Cell key={`cell-${index}`} fill={['#D9E5D6', '#CBEEF3', '#DFAEB4', '#0C7489'][index % 4]} />
                   ))}
                   </Pie>
                   <Tooltip />
@@ -66,7 +66,7 @@ const Charts = ({ recipes }) => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="#82ca9d" />
+                  <Line type="monotone" dataKey="value" stroke="#13505B" />
               </LineChart>
           </div>
         
