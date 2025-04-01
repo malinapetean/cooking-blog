@@ -23,23 +23,36 @@ function CookingBlog({ recipes, onDelete }) {
     };
 
     
-    
-    
-  
-    // useEffect(() => {
-    //     setSortedRecipes(recipes);
-    //   }, [recipes]);
-  
-    const handleFilter = (category) => {
-      setFilteredCategory(category);
-      setCurrentPage(0);
+    const handleFilter = async (category) => {
+      try {
+        const response = await fetch(`http://localhost:8080/recipes?category=${category}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch recipes for category ${category}: ${response.statusText}`);
+        }
+
+        const filteredRecipes = await response.json();
+        setSortedRecipes(filteredRecipes);
+        setFilteredCategory(category);
+        setCurrentPage(0);
+      } catch (error) {
+        console.error("Error fetching recipes by category:", error);
+      }
     };
+    useEffect(() => {
+      setSortedRecipes([...recipes]); // Reset sortedRecipes on refresh
+    }, [recipes]);
 
     useEffect(() => {
         setSortedRecipes(recipes);
-        const maxTime = Math.max(...recipes.map(r => r.totaltime));
-        const minTime = Math.min(...recipes.map(r => r.totaltime));
-        const avgTime = recipes.reduce((acc, r) => acc + r.totaltime, 0) / recipes.length;
+        const maxTime = Math.max(...recipes.map(r => r.totalTime));
+        const minTime = Math.min(...recipes.map(r => r.totalTime));
+        const avgTime = recipes.reduce((acc, r) => acc + r.totalTime, 0) / recipes.length;
         setMaxTimeRecipe(maxTime);
         setMinTimeRecipe(minTime);
         setAvgTime(avgTime);
@@ -48,20 +61,35 @@ function CookingBlog({ recipes, onDelete }) {
         console.log(avgTime);
       }, [recipes]);
   
-    const filteredRecipes =
-    filteredCategory === "All"
-      ? sortedRecipes
-      : sortedRecipes.filter((r) => r.category === filteredCategory);
+      const filteredRecipes =
+      filteredCategory === "All"
+         ? recipes
+         : sortedRecipes.filter((r) => r.category === filteredCategory);
 
     const displayedRecipes = filteredRecipes.slice(
       currentPage * itemsPerPage,
       (currentPage + 1) * itemsPerPage
     );
 
-    const handleSortByTime = () => {
-        const sorted = [...recipes].sort((a, b) => a.totaltime - b.totaltime);
-        setSortedRecipes(sorted);
+    const handleSortByTime = async () => {
+        const response = await fetch("http://localhost:8080/sortByTime", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to sort recipes: ${response.statusText}`);
+        }
+        const sortedRec = await response.json();
+        console.log(sortedRec);
+
+        setSortedRecipes(sortedRec);
+        setFilteredCategory("All");
+        setCurrentPage(0);
     }
+
+
     const chartsButtonHandler = () => {
       navigate("/chart");
     };
@@ -92,11 +120,11 @@ function CookingBlog({ recipes, onDelete }) {
           {displayedRecipes.map((recipe) => {
             
             let className = "";
-            if (recipe.totaltime === maxTimeRecipe) {
+            if (recipe.totalTime === maxTimeRecipe) {
                 className += "max-time";
-            } else if (recipe.totaltime === minTimeRecipe) {
+            } else if (recipe.totalTime === minTimeRecipe) {
                 className += "min-time";
-            } else if (Math.abs(recipe.totaltime - avgTime) < 5) {
+            } else if (Math.abs(recipe.totalTime - avgTime) < 5) {
                 className += "avg-time";
             }
             else
@@ -109,7 +137,7 @@ function CookingBlog({ recipes, onDelete }) {
               <div>
                 <h2 className="text-lg font-bold">{recipe.title}</h2>
                 <p>{recipe.description}</p>
-                <p>{recipe.totaltime} minutes</p>
+                <p>{recipe.totalTime} minutes</p>
                 <div className="button-group">
                   <Button className="ml-2 bg-red-500 hover:bg-red-700" onClick={() => onDelete(recipe.id)}>Delete</Button>
                   <Button className="ml-2 bg-yellow-500 hover:bg-yellow-700" onClick={() => navigate(`/update-recipe/${recipe.id}`)}>Update</Button>

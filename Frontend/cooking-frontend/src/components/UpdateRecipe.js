@@ -9,11 +9,11 @@ function UpdateRecipe({ recipes, onUpdate }) {
     const [title, setTitle] = useState(recipe.title);
     const [category, setCategory] = useState(recipe.category);
     const [description, setDescription] = useState(recipe.description);
-    const [totaltime, setTotaltime] = useState(recipe.totaltime);
+    const [totaltime, setTotaltime] = useState(recipe.totalTime);
     const [image, setImage] = useState(recipe.image);
     const navigate = useNavigate();
   
-    const handleSubmit = () => {
+    const handleSubmit =  async () => {
       if (!title || !description || !image || !totaltime) {
         alert("Please fill in all fields.");
         return;
@@ -22,8 +22,34 @@ function UpdateRecipe({ recipes, onUpdate }) {
         alert("Please enter a number for the total time.");
         return;
       }
-      onUpdate({ id: recipe.id, title, category, description, totaltime, image });
-      navigate("/");
+      const updatedRecipe = {
+        id: parseInt(id),
+        title,
+        category,
+        description,
+        totalTime: parseInt(totaltime, 10),
+        image,
+      };
+      try{
+        const response = await fetch(`http://localhost:8080/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedRecipe),
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to update recipe: ${response.statusText}`);
+        }
+        const updatedRecipes = await response.json();
+        onUpdate(updatedRecipes);
+        navigate("/");
+      }
+      catch(error){
+        console.error("Error updating recipe:", error);
+        alert("There was an error updating the recipe. Please try again.");
+      }
+      
     };
   
     return (
