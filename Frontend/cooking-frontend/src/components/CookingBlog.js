@@ -63,7 +63,7 @@ function CookingBlog({ recipes, onDelete }) {
   
       const filteredRecipes =
       filteredCategory === "All"
-         ? recipes
+         ? sortedRecipes
          : sortedRecipes.filter((r) => r.category === filteredCategory);
 
     const displayedRecipes = filteredRecipes.slice(
@@ -108,7 +108,7 @@ function CookingBlog({ recipes, onDelete }) {
           <h2 className="text-lg font-bold">Categories</h2>
         </div>
         <div className="my-4">
-          {['All', 'Meat', 'Salads', 'Pasta', 'Deserts'].map((category) => (
+          {['All', 'Meat', 'Salads', 'Pasta', 'Deserts', 'Soup'].map((category) => (
             <Button key={category} onClick={() => handleFilter(category)} className="m-1">{category}</Button>
           ))}
         </div>
