@@ -13,7 +13,7 @@ const Charts = ({ recipes }) => {
       if (!acc[recipe.category]) {
           acc[recipe.category] = { total: 0, count: 0 };
       }
-      acc[recipe.category].total += recipe.totaltime;
+      acc[recipe.category].total += recipe.totalTime;
       acc[recipe.category].count += 1;
       return acc;
     }, {});

@@ -25,6 +25,7 @@ public class Repository {
         recipes.add(new Recipe(8, "Chocolate Cake", "Deserts", "Delicious chocolate cake.", 150, "https://i.pinimg.com/736x/20/7d/26/207d2626197bc2edbc40d5165f726758.jpg"));
         recipes.add(new Recipe(9, "Fritto Misto", "Meat", "Delicious fried seafood.", 120, "https://i.pinimg.com/736x/96/f7/93/96f7930dd034f17dd25759532038e549.jpg"));
         recipes.add(new Recipe(10, "Steak", "Meat", "Juicy steak with flavorful sauce.", 90, "https://i.pinimg.com/736x/e0/24/b2/e024b26a7f553ad39331ed8414a3d910.jpg"));
+        recipes.add(new Recipe(11,"Chicken soup","Soup","The wellness soup:)",115,"https://i.pinimg.com/736x/df/4e/d5/df4ed57e7f3bea9d07386fbbdf23c01f.jpg"));
 
     }
     public List<Recipe> getRecipes() {
