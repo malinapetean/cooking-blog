@@ -27,6 +27,20 @@ public class Repository {
         recipes.add(new Recipe(10, "Steak", "Meat", "Juicy steak with flavorful sauce.", 90, "https://i.pinimg.com/736x/e0/24/b2/e024b26a7f553ad39331ed8414a3d910.jpg"));
         recipes.add(new Recipe(11,"Chicken soup","Soup","The wellness soup:)",115,"https://i.pinimg.com/736x/df/4e/d5/df4ed57e7f3bea9d07386fbbdf23c01f.jpg"));
 
+
+        for (int i = 12; i <= 50; i++) {
+            String category = switch (i % 5) {
+                case 0 -> "Pasta";
+                case 1 -> "Meat";
+                case 2 -> "Salads";
+                case 3 -> "Desserts";
+                case 4 -> "Soup";
+                default -> "Other";
+            };
+            recipes.add(new Recipe(i, "Recipe " + i, category, "Description for recipe " + i, 30 + (i % 5) * 10,
+                    "https://i.pinimg.com/736x/sample/sample-image" + i + ".jpg"));
+        }
+
     }
     public List<Recipe> getRecipes() {
         return recipes;

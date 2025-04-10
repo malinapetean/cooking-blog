@@ -59,6 +59,11 @@ public class Controller {
         return ResponseEntity.ok(service.getByCategory(category));
     }
 
+    @GetMapping("/server")
+    public ResponseEntity<Boolean> getServer() {
+        return ResponseEntity.ok(true);
+    }
+
 
 
 }
