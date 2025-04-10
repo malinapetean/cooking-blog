@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "./button";
 import { Card } from "./card";
-import ReactPaginate from "react-paginate";
+
 
 
 
@@ -14,13 +14,24 @@ function CookingBlog({ recipes, onDelete }) {
     const [avgTime, setAvgTime] = useState(null);
     const navigate = useNavigate();
 
-    const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 3;
+    const [visibleCount, setVisibleCount] = useState(10);
+    const incrementCount = 3; 
+    
+    
 
+    useEffect(() => {
+      const handleScroll = () => {
+        const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+    
+        if (nearBottom && visibleCount < recipes.length) {
+          setVisibleCount(prev => Math.min(prev + incrementCount, recipes.length));
+        }
+      };
+    
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [visibleCount, recipes.length]);
 
-    const handlePageChange = ({ selected }) => {
-      setCurrentPage(selected);
-    };
 
     
     const handleFilter = async (category) => {
@@ -39,7 +50,6 @@ function CookingBlog({ recipes, onDelete }) {
         const filteredRecipes = await response.json();
         setSortedRecipes(filteredRecipes);
         setFilteredCategory(category);
-        setCurrentPage(0);
       } catch (error) {
         console.error("Error fetching recipes by category:", error);
       }
@@ -66,10 +76,7 @@ function CookingBlog({ recipes, onDelete }) {
          ? sortedRecipes
          : sortedRecipes.filter((r) => r.category === filteredCategory);
 
-    const displayedRecipes = filteredRecipes.slice(
-      currentPage * itemsPerPage,
-      (currentPage + 1) * itemsPerPage
-    );
+      const displayedRecipes = filteredRecipes.slice(0, visibleCount);
 
     const handleSortByTime = async () => {
         const response = await fetch("http://localhost:8080/sortByTime", {
@@ -86,7 +93,6 @@ function CookingBlog({ recipes, onDelete }) {
 
         setSortedRecipes(sortedRec);
         setFilteredCategory("All");
-        setCurrentPage(0);
     }
 
 
@@ -146,15 +152,7 @@ function CookingBlog({ recipes, onDelete }) {
             </Card>);
         })}
         </div>
-        <ReactPaginate
-          previousLabel={"← Previous"}
-          nextLabel={"Next →"}
-          pageCount={Math.ceil(filteredRecipes.length / itemsPerPage)}
-          onPageChange={handlePageChange}
-          containerClassName={"pagination"}
-          activeClassName={"active"}
-          
-        />
+        
       </div>
     );
 }
