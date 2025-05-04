@@ -3,15 +3,21 @@ import { BrowserRouter as Router, Route, Routes} from "react-router";
 import './App.css';
 
 
-import  CookingBlog from "./components/CookingBlog";
-import  AddRecipe from "./components/AddRecipe";
-import  UpdateRecipe from "./components/UpdateRecipe";
+import CookingBlog from "./components/CookingBlog";
+import AddRecipe from "./components/AddRecipe";
+import UpdateRecipe from "./components/UpdateRecipe";
 import Charts from "./components/Chart";
+import { CheckingServer, useOnlineStatus} from "./ServerChecking";
+
 
 
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
+  const [serverState, setServerState]= useState(true);
+  const [onlineState, setOnlineState]= useState(true);
+  CheckingServer(setServerState);
+  useOnlineStatus(setOnlineState);
 
   useEffect(()=>{
     const fetchdata = async () => {
@@ -56,10 +62,13 @@ export default function App() {
     }
   };
 
-  return (
-    <>
-      {recipes.length === 0 ? (
-        <div>Loading...</div>
+  return !onlineState ? (
+    <div className="error">Check wi-fi</div>
+  ): ! serverState ? (
+    <div className="error">Server is down</div>
+  ):
+  recipes.length===0 ? (
+    <div className="loading">Loading...</div>
       ) : (
         <Router>
           <Routes>
@@ -69,8 +78,8 @@ export default function App() {
             <Route path="/chart" element={<Charts recipes={recipes} />} />
           </Routes>
         </Router>
-      )}
-    </>
-  );
-  
+      );
 }
+   
+  
+  

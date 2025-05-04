@@ -1,63 +1,44 @@
 package com.example.cookingbackend.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-//@Entity
+
+import java.util.List;
+
+@Entity
 @Data
-
-//@Table(name = "Recipe")
 public class Recipe {
-    //@Id
-    //@Column(name = "ID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private long id;
 
-    //@Column(name = "Title")
+    @Column
     private String title;
-
-    //@Column(name = "Category")
+    @Column
     private String category;
-
-    //@Column(name = "Description")
+    @Column
     private String description;
-
-    //@Column(name = "TotalTime")
+    @Column
     private int totalTime;
-
-    //@Column(name = "Image")
+    @Column
     private String image;
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RecipeIngredient> recipeIngredients;
 
-    public Recipe(long id, String title, String category, String description, int totalTime, String image) {
+    public Recipe(long id,String title, String category, String description, int totalTime, String image) {
         this.id = id;
         this.title = title;
         this.category = category;
         this.description = description;
         this.totalTime = totalTime;
         this.image = image;
+
     }
-    public long getId() { return id; }
-    public String getTitle() { return title; }
-    public String getCategory() { return category; }
-    public String getDescription() { return description; }
-    public int getTotalTime() { return totalTime; }
-    public String getImage() { return image; }
 
-    public void setId(long id) { this.id = id; }
-    public void setTitle(String title) { this.title = title; }
-    public void setCategory(String category) { this.category = category; }
-    public void setDescription(String description) { this.description = description; }
-    public void setTotalTime(int totalTime) { this.totalTime = totalTime; }
-    public void setImage(String image) { this.image = image; }
+    public Recipe() {
 
-
-    // Default constructor (needed for frameworks like Spring)
-    public Recipe() {}
-
-
+    }
 }

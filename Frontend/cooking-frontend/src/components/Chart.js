@@ -54,7 +54,7 @@ const Charts = ({ recipes }) => {
               <PieChart width={400} height={300}>
                   <Pie data={categoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100}>
                   {categoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={['#D9E5D6', '#CBEEF3', '#DFAEB4', '#0C7489'][index % 4]} />
+                      <Cell key={`cell-${index}`} fill={['#D9E5D6', '#CBEEF3', '#DFAEB4', '#0C7489','#E1CAA5'][index % 5]} />
                   ))}
                   </Pie>
                   <Tooltip />
