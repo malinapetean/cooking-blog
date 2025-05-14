@@ -118,7 +118,15 @@ function CookingBlog({ recipes, onDelete }) {
             <Button key={category} onClick={() => handleFilter(category)} className="m-1">{category}</Button>
           ))}
         </div>
-  
+        {localStorage.getItem("isAdmin") === "true" && (
+            <Button
+              className="ml-2 bg-yellow-500 hover:bg-yellow-700"
+              onClick={() => navigate("/admin/monitored-users")}
+            >
+              See monitored users
+            </Button>
+          )
+          }
         { <Button onClick={handleSortByTime} className="mb-4">Sort by Total Time (Ascending)</Button> }
         { <Button onClick={chartsButtonHandler} className="mb-4">View Charts</Button> }
 
