@@ -1,40 +1,34 @@
-import { useEffect} from "react";
+import { useEffect, useState } from 'react';
 
-export function CheckingServer(setServerState) {
-    useEffect(() => {
-        const checkServer = () => {
-           fetch("http://localhost:8080/server")
-                .then(()=> setServerState(true)) // Server is up
-                .catch((error) => {
-                    console.error("Error checking server:", error);
-                    setServerState(false); // Server is down
-                });
-        };
+export function useNetworkStatus(pingUrl) {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isServerUp, setIsServerUp] = useState(true);
 
-        checkServer();
-        const interval = setInterval(checkServer, 5000); // Check every 5 seconds
-        return () => clearInterval(interval); // Cleanup on unmount
-    }, [setServerState]);
+  useEffect(() => {
+    const updateOnlineStatus = () => setIsOnline(navigator.onLine);
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+    const checkServer = async () => {
+      try {
+        const res = await fetch(pingUrl, { cache: 'no-store' });
+        setIsServerUp(res.ok);
+      } catch {
+        setIsServerUp(false);
+      }
+    };
+
+    const interval = setInterval(() => {
+      if (navigator.onLine) checkServer();
+    }, 3000);
+
+    checkServer();
+    return () => {
+      window.removeEventListener('online', updateOnlineStatus);
+      window.removeEventListener('offline', updateOnlineStatus);
+      clearInterval(interval);
+    };
+  }, [pingUrl]);
+
+  return { isOnline, isServerUp };
 }
-
-export function useOnlineStatus(setIsOnline) {
-    useEffect(() => {
-        const updateOnlineStatus = () => {
-            const isOnline = typeof window !== "undefined" && navigator.onLine;
-            setIsOnline(isOnline);
-        };
-
-        window.addEventListener("online", updateOnlineStatus);
-        window.addEventListener("offline", updateOnlineStatus);
-
-        // Initial check
-        updateOnlineStatus();
-
-        return () => {
-            window.removeEventListener("online", updateOnlineStatus);
-            window.removeEventListener("offline", updateOnlineStatus);
-        };
-    }, [setIsOnline]);
-}
-
-

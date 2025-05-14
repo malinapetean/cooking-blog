@@ -7,18 +7,21 @@ import CookingBlog from "./components/CookingBlog";
 import AddRecipe from "./components/AddRecipe";
 import UpdateRecipe from "./components/UpdateRecipe";
 import Charts from "./components/Chart";
-import { CheckingServer, useOnlineStatus} from "./ServerChecking";
+import StatusBanner from "./components/StatusBanner";
+import { useNetworkStatus } from "./ServerChecking";
+import LogIn from "./components/Login";
+import Authenticate from "./components/Signup";
+import MonitoredUsersPage from "./components/Admin"; 
 
 
 
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
-  const [serverState, setServerState]= useState(true);
-  const [onlineState, setOnlineState]= useState(true);
-  CheckingServer(setServerState);
-  useOnlineStatus(setOnlineState);
-
+  
+  const { isOnline, isServerUp } = useNetworkStatus("http://localhost:8080/ping");
+  
+  
   useEffect(()=>{
     const fetchdata = async () => {
       try{
@@ -34,6 +37,31 @@ export default function App() {
     }
     fetchdata();
   },[])
+
+  useEffect(() => {
+    const socket = new WebSocket("ws://localhost:8080/ws/recipes");
+  
+    socket.onopen = () => {
+      console.log("Connected to WebSocket");
+    };
+  
+    socket.onmessage = (event) => {
+      const newRecipe = JSON.parse(event.data);
+      console.log("Received recipe:", newRecipe);
+      // Update your state here
+      // For example, if you want to add the new recipe to the list:
+      setRecipes((prevRecipes) => [...prevRecipes, newRecipe]);
+    };
+  
+    socket.onclose = () => {
+      console.log("WebSocket disconnected");
+    };
+  
+    return () => {
+      socket.close();
+    };
+  }, []);
+  
   
 
   const handleAddRecipe = (newRecipes) => {
@@ -45,9 +73,6 @@ export default function App() {
   };
 
   const handleDeleteRecipe = async (id) => {
-    // if (window.confirm("Are you sure you want to delete this recipe?")) {
-    //   setRecipes(recipes.filter((r) => r.id !== id));
-    // }
     if (window.confirm("Are you sure you want to delete this recipe?")) {
         const response = await fetch(`http://localhost:8080/${id}`, {
           method: "DELETE",
@@ -62,23 +87,22 @@ export default function App() {
     }
   };
 
-  return !onlineState ? (
-    <div className="error">Check wi-fi</div>
-  ): ! serverState ? (
-    <div className="error">Server is down</div>
-  ):
-  recipes.length===0 ? (
-    <div className="loading">Loading...</div>
-      ) : (
+  return (
+  
         <Router>
+          <StatusBanner isOnline={isOnline} isServerUp={isServerUp}  />
           <Routes>
-            <Route path="/" element={<CookingBlog recipes={recipes} onDelete={handleDeleteRecipe} />} />
+            <Route path="" element={<LogIn />} />
+            <Route path="/signup" element={<Authenticate />} />
+            <Route path="/home" element={<CookingBlog recipes={recipes} onDelete={handleDeleteRecipe} />} />
             <Route path="/add-recipe" element={<AddRecipe onSave={handleAddRecipe} />} />
             <Route path="/update-recipe/:id" element={<UpdateRecipe recipes={recipes} onUpdate={handleUpdateRecipe} />} />
             <Route path="/chart" element={<Charts recipes={recipes} />} />
+            <Route path="/admin/monitored-users" element={<MonitoredUsersPage />} />
           </Routes>
         </Router>
-      );
+      
+  );
 }
    
   
