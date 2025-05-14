@@ -1,9 +1,11 @@
 package com.example.cookingbackend.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,6 +28,7 @@ public class Recipe {
     private String image;
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<RecipeIngredient> recipeIngredients;
 
     public Recipe(long id,String title, String category, String description, int totalTime, String image) {

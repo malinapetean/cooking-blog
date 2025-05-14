@@ -28,7 +28,6 @@ public class IngredientService {
         return ingredientRepository.findById(id)
                 .map(ingredient -> {
                     ingredient.setName(updatedIngredient.getName());
-                    ingredient.setQuantity(updatedIngredient.getQuantity());
                     ingredient.setUnit(updatedIngredient.getUnit());
                     return ingredientRepository.save(ingredient);
                 })
