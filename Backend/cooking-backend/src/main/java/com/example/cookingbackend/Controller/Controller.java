@@ -47,7 +47,7 @@ public class Controller {
         this.monitoredUserRepository = monitoredUserRepository;
 
     }
-    @GetMapping("/")
+    @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
         return ResponseEntity.ok("Backend is alive!");
     }
