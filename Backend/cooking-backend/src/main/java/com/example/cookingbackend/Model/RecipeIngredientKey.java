@@ -1,20 +1,33 @@
 package com.example.cookingbackend.Model;
 
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeIngredientKey implements Serializable {
     private Long recipeId;
     private Long ingredientId;
+
+    public Long getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(Long recipeId) {
+        this.recipeId = recipeId;
+    }
+
+    public Long getIngredientId() {
+        return ingredientId;
+    }
+
+    public void setIngredientId(Long ingredientId) {
+        this.ingredientId = ingredientId;
+    }
 
     @Override
     public boolean equals(Object o) {

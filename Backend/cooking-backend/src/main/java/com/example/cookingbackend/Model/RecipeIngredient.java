@@ -1,5 +1,7 @@
 package com.example.cookingbackend.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,19 +14,21 @@ import java.util.Objects;
 @AllArgsConstructor
 public class RecipeIngredient {
     @EmbeddedId
+    @JsonIgnore
     private RecipeIngredientKey id;
 
     @ManyToOne
     @MapsId("recipeId")
     @JoinColumn(name = "recipe_id")
+    @JsonBackReference
     private Recipe recipe;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("ingredientId")
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
-    private String quantityDescription; // e.g., "2 cups", "1 tbsp"
+    private String quantity; // e.g., "2 cups", "1 tbsp"
 }
 
 
