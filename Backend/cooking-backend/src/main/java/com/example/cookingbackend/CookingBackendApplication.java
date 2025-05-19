@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CookingBackendApplication {
 
     public static void main(String[] args) {
+        System.out.println("🚀 MAIN start");
         SpringApplication.run(CookingBackendApplication.class, args);
         System.out.println("✅ App started on port 8080");
     }
