@@ -47,14 +47,14 @@ public class Controller {
         this.monitoredUserRepository = monitoredUserRepository;
 
     }
-    @GetMapping("/health")
+    @GetMapping
     public ResponseEntity<String> healthCheck() {
         System.out.println("✅ /health endpoint hit!");
 
         return ResponseEntity.ok("Backend is alive!");
     }
 
-    @GetMapping
+    @GetMapping("/recipes")
     public ResponseEntity<List<Recipe>> getRecipes() {
         return ResponseEntity.ok(recipeService.getAllRecipes());
     }
