@@ -2,9 +2,11 @@ package com.example.cookingbackend.Repository;
 
 import com.example.cookingbackend.Model.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     Optional<Ingredient> findByName(String name);
 
