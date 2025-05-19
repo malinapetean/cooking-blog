@@ -9,6 +9,7 @@ public class CookingBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CookingBackendApplication.class, args);
+        System.out.println("✅ App started on port 8080");
     }
     @PostConstruct
     public void logDbUrl() {
