@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/")
+///@RequestMapping("/")
 public class Controller {
 
     private final RecipeService recipeService;
