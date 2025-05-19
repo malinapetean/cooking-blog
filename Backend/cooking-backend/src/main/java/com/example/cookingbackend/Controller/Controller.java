@@ -49,6 +49,8 @@ public class Controller {
     }
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
+        System.out.println("✅ /health endpoint hit!");
+
         return ResponseEntity.ok("Backend is alive!");
     }
 
