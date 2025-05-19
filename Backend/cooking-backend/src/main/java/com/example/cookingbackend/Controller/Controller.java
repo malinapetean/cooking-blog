@@ -54,7 +54,7 @@ public class Controller {
         return ResponseEntity.ok("Backend is alive!");
     }
 
-    @GetMapping("/recipes")
+    @GetMapping("/all_recipes")
     public ResponseEntity<List<Recipe>> getRecipes() {
         return ResponseEntity.ok(recipeService.getAllRecipes());
     }
