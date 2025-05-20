@@ -14,7 +14,9 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000")); // Permite frontend-ul React
+        config.setAllowedOrigins(List.of("http://localhost:3000", // local dev
+                "https://cooking-blog-frontend.up.railway.app" // Railway frontend
+        )); // Permite frontend-ul React
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
