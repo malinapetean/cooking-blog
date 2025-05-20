@@ -25,7 +25,7 @@ export default function App() {
   useEffect(()=>{
     const fetchdata = async () => {
       try{
-      const response=await fetch("http://16.171.44.125:8080/all-recipes");
+      const response=await fetch("http://16.171.44.125:8080/");
       const data= await response.json();
       setRecipes(data);
       console.log(data);

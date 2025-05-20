@@ -75,6 +75,7 @@ function AddRecipe({ onSave }) {
     
       // Create the new recipe object
       const newRecipe = {
+        id: parseInt(Date.now()), // Use a timestamp as a temporary ID
         title,
         category,
         description,
