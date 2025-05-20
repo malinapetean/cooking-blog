@@ -54,7 +54,7 @@ function AddRecipe({ onSave }) {
       formData.append("file", file);
 
       try {
-        const uploadResponse = await fetch("http://localhost:8080/upload", {
+        const uploadResponse = await fetch("http://16.171.44.125:8080/upload", {
           method: "POST",
           body: formData,
         });
@@ -90,7 +90,7 @@ function AddRecipe({ onSave }) {
       };
     
       try {
-        const response = await fetch("http://localhost:8080", {
+        const response = await fetch("http://16.171.44.125:8080", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",  

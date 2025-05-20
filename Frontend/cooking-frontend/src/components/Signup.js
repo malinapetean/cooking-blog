@@ -22,7 +22,7 @@ function Authenticate() {
 
         const signup_data = { username: name, password: password };
 		try {
-            const response = await axios.post("http://localhost:8080/users/register", signup_data, {
+            const response = await axios.post("http://16.171.44.125:8080/users/register", signup_data, {
                 headers: { "Content-Type": "application/json" },
 				withCredentials: true
             });

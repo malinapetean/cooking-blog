@@ -19,13 +19,13 @@ import MonitoredUsersPage from "./components/Admin";
 export default function App() {
   const [recipes, setRecipes] = useState([]);
   
-  const { isOnline, isServerUp } = useNetworkStatus("http://localhost:8080/ping");
+  const { isOnline, isServerUp } = useNetworkStatus("http://16.171.44.125:8080/ping");
   
   
   useEffect(()=>{
     const fetchdata = async () => {
       try{
-      const response=await fetch("http://localhost:8080");
+      const response=await fetch("http://16.171.44.125:8080/all-recipes");
       const data= await response.json();
       setRecipes(data);
       console.log(data);
@@ -39,7 +39,7 @@ export default function App() {
   },[])
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080/ws/recipes");
+    const socket = new WebSocket("ws://16.171.44.125:8080/ws/recipes");
   
     socket.onopen = () => {
       console.log("Connected to WebSocket");
@@ -74,7 +74,7 @@ export default function App() {
 
   const handleDeleteRecipe = async (id) => {
     if (window.confirm("Are you sure you want to delete this recipe?")) {
-        const response = await fetch(`http://localhost:8080/${id}`, {
+        const response = await fetch(`http://16.171.44.125:8080/${id}`, {
           method: "DELETE",
         });
         if (response.ok) {

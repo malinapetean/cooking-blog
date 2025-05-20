@@ -67,7 +67,7 @@ function UpdateRecipe({ recipes, onUpdate }) {
       formData.append("file", file);
 
       try {
-        const uploadResponse = await fetch("http://localhost:8080/upload", {
+        const uploadResponse = await fetch("http://16.171.44.125:8080/upload", {
           method: "POST",
           body: formData,
           withCredentials: true
@@ -104,7 +104,7 @@ function UpdateRecipe({ recipes, onUpdate }) {
     console.log(updatedRecipe);
 
     try {
-      const response = await fetch(`http://localhost:8080/${id}`, {
+      const response = await fetch(`http://16.171.44.125:8080/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

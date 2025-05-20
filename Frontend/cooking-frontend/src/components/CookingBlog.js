@@ -36,7 +36,7 @@ function CookingBlog({ recipes, onDelete }) {
     
     const handleFilter = async (category) => {
       try {
-        const response = await fetch(`http://localhost:8080/recipes?category=${category}`, {
+        const response = await fetch(`http://16.171.44.125:8080/recipes?category=${category}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -79,7 +79,7 @@ function CookingBlog({ recipes, onDelete }) {
       const displayedRecipes = filteredRecipes.slice(0, visibleCount);
 
     const handleSortByTime = async () => {
-        const response = await fetch("http://localhost:8080/sortByTime", {
+        const response = await fetch("http://16.171.44.125:8080/sortByTime", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

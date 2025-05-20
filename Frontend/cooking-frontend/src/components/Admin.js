@@ -6,7 +6,7 @@ function MonitoredUsersPage() {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		axios.get("http://localhost:8080/admin/monitored-users", {
+		axios.get("http://16.171.44.125:8080/admin/monitored-users", {
 			withCredentials: true,
 		})
 		.then(res => setMonitoredUsers(res.data))
